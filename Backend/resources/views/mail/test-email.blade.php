@@ -1,0 +1,1 @@
+Hey {{$name}}, this is a test email from Clearance System.

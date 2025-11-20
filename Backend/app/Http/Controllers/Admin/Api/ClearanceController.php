@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers\Admin\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clearance;
@@ -217,6 +217,32 @@ class ClearanceController extends Controller
             'message' => 'Clearance request updated successfully',
             'data' => $clearance,
         ]);
+    }
+
+    /**
+     * Delete clearance request
+     */
+    public function destroy($id): JsonResponse
+    {
+        DB::beginTransaction();
+        try {
+            $clearance = Clearance::findOrFail($id);
+            $clearance->delete();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Clearance request deleted successfully',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete clearance request',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

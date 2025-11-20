@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->string('section');
-            $table->string('course');
+            $table->integer('year_level');
             $table->string('request_type');
             $table->string('status')->default('pending');
             $table->text('notes')->nullable();
